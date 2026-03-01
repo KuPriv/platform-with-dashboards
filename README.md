@@ -36,8 +36,8 @@ REST API платформа для загрузки данных (CSV/Excel) и 
 
 ### Установка
 ```bash
-git clone https://github.com/KuPriv/platformwithdashboards.git
-cd platformwithdashboards
+git clone https://github.com/KuPriv/platform-with-dashboards.git
+cd platform-with-dashboards
 
 poetry install
 cp .env.example .env
