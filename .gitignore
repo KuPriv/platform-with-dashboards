@@ -1,0 +1,61 @@
+ # Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Django
+*.log
+*.pot
+*.pyc
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Media и статика (генерируются, не хранятся в git)
+media/
+staticfiles/
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.staging
+
+# Coverage / тесты
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Временные файлы
+*.tmp
+*.bak
+*.orig
+
+# Загруженные файлы пользователей
+uploads/
