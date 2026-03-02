@@ -29,7 +29,6 @@ requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.group.dev.dependencies]
-black = ">=26.1.0,<27.0.0"
 ruff = ">=0.15.4,<0.16.0"
 pytest = ">=9.0.2,<10.0.0"
 pytest-django = ">=4.12.0,<5.0.0"
@@ -38,6 +37,7 @@ coverage = ">=7.13.4,<8.0.0"
 factory-boy = ">=3.3.3,<4.0.0"
 django-debug-toolbar = ">=6.2.0,<7.0.0"
 pre-commit = ">=4.5.1,<5.0.0"
+bandit = "^1.9.4"
 
 [tool.ruff]
 line-length = 88
@@ -53,9 +53,9 @@ select = [
 ]
 ignore = ["E501"]  # длина строки — black сам следит
 
-[tool.black]
-line-length = 88
-target-version = ["py313"]
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
 
 [tool.poetry]
 package-mode = false
