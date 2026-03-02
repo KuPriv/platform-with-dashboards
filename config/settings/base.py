@@ -68,7 +68,7 @@ DATABASES = {
 }
 
 # Auth Model
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = "users.User"
 
 # Redis
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
