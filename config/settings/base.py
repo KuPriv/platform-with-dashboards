@@ -19,8 +19,8 @@ INSTALLED_APPS = [
     # сторонние
     "rest_framework",
     "rest_framework_simplejwt",
-    "django_extensions",
     # свои
+    "apps.core",
     "apps.users",
     "apps.datasets",
     "apps.dashboards",
@@ -63,8 +63,12 @@ DATABASES = {
         "PASSWORD": os.getenv("DB_PASSWORD"),
         "HOST": os.getenv("DB_HOST", "localhost"),
         "PORT": os.getenv("DB_PORT", "5432"),
+        "CONN_MAX_AGE": 60,
     }
 }
+
+# Auth Model
+AUTH_USER_MODEL = 'users.User'
 
 # Redis
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
@@ -84,6 +88,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 20,
 }
+APPEND_SLASH = True
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
