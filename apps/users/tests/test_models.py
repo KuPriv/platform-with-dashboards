@@ -7,13 +7,13 @@ User = get_user_model()
 @pytest.mark.django_db
 def test_create_user():
     user = User.objects.create_user(
-        username="testuser",
+        email="example@example.com",
         password="testpass123",
     )
-    assert user.username == "testuser"
+    assert user.email == "example@example.com"
 
 
 @pytest.mark.django_db
 def test_user_str():
-    user = User.objects.create_user(username="egor", password="pass")
-    assert str(user) == "egor"
+    user = User.objects.create_user(email="example@example.com", password="testpass123")
+    assert str(user) == "example@example.com"
