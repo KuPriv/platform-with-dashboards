@@ -29,6 +29,7 @@ class Dataset(BaseModel):
     class Meta:
         verbose_name = "Датасет"
         verbose_name_plural = "Датасеты"
+        ordering = ["-id"]
 
 
 class DatasetRow(BaseModel):
