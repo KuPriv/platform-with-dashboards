@@ -2,8 +2,8 @@
 
 > Аналитическая платформа с настраиваемыми дашбордами
 
-![CI](https://gist.githubusercontent.com/KuPriv/10addf2357a528180330d3f6db745d43/raw/92831f8ab4fb1ab32eba7f10954559f0f73ee4f8/git-actions.svg)
-![Coverage](https://gist.githubusercontent.com/KuPriv/2c62f8e2753c047ffcace254e68163a8/raw/a4ee2383243ea9b280c4e9c3c3e9b3faefb75a55/coverage.svg)
+![CI](https://gist.githubusercontent.com/KuPriv/10addf2357a528180330d3f6db745d43/raw/git-actions.svg)
+![Coverage](https://gist.githubusercontent.com/KuPriv/2c62f8e2753c047ffcace254e68163a8/raw/coverage.svg)
 ![Python](https://img.shields.io/badge/python-3.13-blue)
 ![Django](https://img.shields.io/badge/django-6.0-green)
 ![License](https://img.shields.io/badge/license-MIT-blue)
