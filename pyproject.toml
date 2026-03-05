@@ -1,6 +1,6 @@
 [project]
 name = "platformwithdashboards"
-version = "0.1.0"
+version = "0.3.0"
 description = ""
 authors = [
     {name = "Egor Sezen",email = "sezen.egor@mail.ru"}
@@ -20,7 +20,8 @@ dependencies = [
     "openpyxl (>=3.1.5,<4.0.0)",
     "pandas (>=3.0.1,<4.0.0)",
     "prometheus-client (>=0.24.1,<0.25.0)",
-    "requests (>=2.32.5,<3.0.0)"
+    "requests (>=2.32.5,<3.0.0)",
+    "drf-spectacular (>=0.29.0,<0.30.0)"
 ]
 
 
@@ -67,3 +68,18 @@ python_classes = ["Test*"]
 python_functions = ["test_*"]
 testpaths = ["apps"]
 addopts = "-v --tb=short"
+
+[tool.coverage.run]
+source = ["apps"]
+omit = [
+    "*/migrations/*",
+    "*/tests/*",
+    "*/admin.py",
+    "manage.py",
+]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+fail_under = 70

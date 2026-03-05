@@ -24,6 +24,7 @@ REST API платформа для загрузки данных (CSV/Excel) и 
 | Авторизация | JWT (SimpleJWT) |
 | Линтеры | ruff |
 | Тесты | pytest-django, coverage |
+| API Docs  | Swagger UI, ReDoc  |
 | DevOps | Docker, GitHub Actions, Nginx |
 
 ## Быстрый старт
@@ -71,13 +72,12 @@ poetry run coverage report
 ```
 platformwithdashboards/
 ├── apps/
-│   ├── core/         # Базовая модель с created_at, updated_at
+│   ├── core/         # Базовая модель, общие permissions
 │   ├── users/        # JWT-аутентификация, роли
 │   ├── datasets/     # Загрузка CSV/Excel, Celery-задачи
 │   ├── dashboards/   # Дашборды и графики
 │   └── notifications/# Email-уведомления
-├── config/           # Django настройки (base/local/production)
-└── services/         # Бизнес-логика
+└── config/           # Django настройки (base/local/production)
 ```
 
 ## Функциональность
@@ -85,10 +85,15 @@ platformwithdashboards/
 - [x] Настройка проекта и CI/CD
 - [x] JWT аутентификация
 - [x] Загрузка и парсинг CSV/Excel файлов
+- [x] API документация (Swagger/ReDoc)
 - [ ] Настраиваемые дашборды с графиками
 - [ ] Экспорт в PDF/Excel
 - [ ] Email-алерты при пороговых значениях
 - [ ] Docker-деплой с Nginx
+
+## API Documentation
+- Swagger UI: http://localhost:8000/api/v1/docs/
+- ReDoc: http://localhost:8000/api/v1/redoc/
 
 ## Лицензия
 

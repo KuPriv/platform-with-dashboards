@@ -119,6 +119,6 @@ jobs:
         uses: exuanbo/actions-deploy-gist@v1
         with:
           token: ${{ secrets.GIT_TOKEN }}
-          gist_id: ${{ vars.GIST_COVERAGE_ID }}
+          gist_id: ${{ vars.GIST_CI_ID }}
           file_path: git-actions.svg
           file_type: text
