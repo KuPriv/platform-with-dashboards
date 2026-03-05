@@ -2,9 +2,8 @@ import logging
 
 from celery import shared_task
 
-from services.dataset_utils import get_parsed_file
-
 from .models import Dataset, DatasetRow
+from .services import get_parsed_file
 
 logger = logging.getLogger(__name__)
 
@@ -13,6 +12,10 @@ logger = logging.getLogger(__name__)
 def process_dataset(dataset_id: int) -> None:
     try:
         dataset = Dataset.objects.get(pk=dataset_id)
+    except Dataset.DoesNotExist:
+        logger.error(f"Dataset {dataset_id} does not exist")
+        return
+    try:
         dataset.status = dataset.Status.STARTED
         dataset.save(update_fields=["status"])
         df = get_parsed_file(dataset.file)
@@ -24,6 +27,6 @@ def process_dataset(dataset_id: int) -> None:
         dataset.status = dataset.Status.SUCCESS
         dataset.save(update_fields=["status"])
     except Exception as e:
-        logger.error(f"process_dataset failed: {e}")
+        logger.error(f"process_dataset {dataset_id} failed: {e}")
         dataset.status = dataset.Status.FAILURE
         dataset.save(update_fields=["status"])

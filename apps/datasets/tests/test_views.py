@@ -5,7 +5,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 
 
 @pytest.mark.django_db
-def test_file_is_vaild(api_client, user):
+def test_file_is_valid(api_client, user):
     api_client.force_authenticate(user=user)
     file = SimpleUploadedFile("test.csv", b"name,age\nEgor,22", content_type="text/csv")
     with patch("apps.datasets.views.process_dataset.delay") as mock_task:
