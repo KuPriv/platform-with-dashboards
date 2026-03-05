@@ -67,3 +67,18 @@ python_classes = ["Test*"]
 python_functions = ["test_*"]
 testpaths = ["apps"]
 addopts = "-v --tb=short"
+
+[tool.coverage.run]
+source = ["apps"]
+omit = [
+    "*/migrations/*",
+    "*/tests/*",
+    "*/admin.py",
+    "manage.py",
+]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+fail_under = 70
