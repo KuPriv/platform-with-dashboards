@@ -8,6 +8,7 @@ from .models import Dataset, DatasetRow
 
 logger = logging.getLogger(__name__)
 
+
 @shared_task
 def process_dataset(dataset_id: int) -> None:
     try:
@@ -23,6 +24,6 @@ def process_dataset(dataset_id: int) -> None:
         dataset.status = dataset.Status.SUCCESS
         dataset.save(update_fields=["status"])
     except Exception as e:
-        logger.error(f'process_dataset failed: {e}')
+        logger.error(f"process_dataset failed: {e}")
         dataset.status = dataset.Status.FAILURE
         dataset.save(update_fields=["status"])
