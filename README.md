@@ -22,7 +22,7 @@ REST API платформа для загрузки данных (CSV/Excel) и 
 | База данных | PostgreSQL, Redis |
 | Очереди | Celery + Redis |
 | Авторизация | JWT (SimpleJWT) |
-| Линтеры | ruff, black |
+| Линтеры | ruff |
 | Тесты | pytest-django, coverage |
 | DevOps | Docker, GitHub Actions, Nginx |
 
@@ -44,7 +44,21 @@ cp .env.example .env
 # заполнить .env своими значениями
 
 poetry run python manage.py migrate
+```
+
+### Запуск
+```bash
+# Redis
+docker run -d -p 6379:6379 redis:7
+
+# Django
 poetry run python manage.py runserver
+
+# Celery (Windows)
+poetry run celery -A config worker -l info --pool=solo
+
+# Celery (Linux/Mac)
+poetry run celery -A config worker -l info
 ```
 
 ### Тесты
@@ -57,6 +71,7 @@ poetry run coverage report
 ```
 platformwithdashboards/
 ├── apps/
+│   ├── core/         # Базовая модель с created_at, updated_at
 │   ├── users/        # JWT-аутентификация, роли
 │   ├── datasets/     # Загрузка CSV/Excel, Celery-задачи
 │   ├── dashboards/   # Дашборды и графики
