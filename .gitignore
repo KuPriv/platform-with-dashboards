@@ -13,6 +13,7 @@ env/
 ENV/
 
 # Django
+logs/
 *.log
 *.pot
 *.pyc
