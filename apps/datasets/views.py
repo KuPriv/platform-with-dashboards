@@ -1,5 +1,6 @@
-from rest_framework import viewsets
+from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import GenericViewSet
 
 from apps.core.permissions import IsOwner
 
@@ -9,7 +10,13 @@ from .services import get_file_type
 from .tasks import process_dataset
 
 
-class DatasetViewSet(viewsets.ModelViewSet):
+class DatasetViewSet(
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    GenericViewSet,
+):
     serializer_class = DatasetSerializer
     permission_classes = [IsAuthenticated, IsOwner]
 
