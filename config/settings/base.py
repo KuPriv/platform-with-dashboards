@@ -1,4 +1,5 @@
 import os
+import tomllib
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -79,6 +80,8 @@ CELERY_BROKER_URL = REDIS_URL
 CELERY_RESULT_BACKEND = REDIS_URL
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
+CELERY_TASK_TIME_LIMIT = 300
+CELERY_TASK_SOFT_TIME_LIMIT = 240
 
 # DRF
 REST_FRAMEWORK = {
@@ -113,3 +116,71 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Feature Flags
+SHOW_API_DOCS = os.getenv("SHOW_API_DOCS", "False") == "True"
+
+# Spectacular settings
+with open(BASE_DIR / "pyproject.toml", "rb") as f:
+    _pyproject = tomllib.load(f)
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Platform With Dashboards API",
+    "DESCRIPTION": "REST API для загрузки датасетов и управления дашбордами",
+    "VERSION": _pyproject["project"]["version"],
+}
+
+# logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+    },
+    "formatters": {
+        "simple": {
+            "format": "[%(asctime)s] %(levelname)s: %(message)s",
+            "datefmt": "%Y.%m.%d %H:%M:%S",
+        }
+    },
+    "handlers": {
+        "console_dev": {
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+            "filters": ["require_debug_true"],
+        },
+        "console_prod": {
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+            "level": "ERROR",
+            "filters": ["require_debug_false"],
+        },
+        "file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": BASE_DIR / "logs" / "django.log",
+            "maxBytes": 1024 * 1024 * 10,
+            "backupCount": 10,
+            "formatter": "simple",
+            "filters": ["require_debug_false"],
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console_dev", "console_prod"],
+        },
+        "apps": {
+            "handlers": ["console_dev", "console_prod", "file"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "django.request": {
+            "handlers": ["file"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+    },
+}
