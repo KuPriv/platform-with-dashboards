@@ -6,6 +6,7 @@ from .models import Dataset, DatasetRow
 @admin.register(Dataset)
 class DatasetAdmin(admin.ModelAdmin):
     list_display = (
+        "id",
         "name",
         "file_type",
         "status",
