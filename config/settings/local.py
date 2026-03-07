@@ -1,7 +1,5 @@
-import tomllib
-
 from .base import *  # noqa: F401, F403
-from .base import BASE_DIR
+from .base import SPECTACULAR_SETTINGS
 
 DEBUG = True
 
@@ -19,11 +17,4 @@ MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]  # noqa: F405
 INTERNAL_IPS = ["127.0.0.1"]
 
 # Spectacular settings
-with open(BASE_DIR / "pyproject.toml", "rb") as f:
-    _pyproject = tomllib.load(f)
-SPECTACULAR_SETTINGS = {
-    "TITLE": "Platform With Dashboards API",
-    "DESCRIPTION": "REST API для загрузки датасетов и управления дашбордами",
-    "VERSION": _pyproject["project"]["version"],
-    "SERVE_INCLUDE_SCHEMA": False,
-}
+SPECTACULAR_SETTINGS["SERVE_INCLUDE_SCHEMA"] = False

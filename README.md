@@ -16,8 +16,8 @@ REST API платформа для загрузки данных (CSV/Excel) и 
 
 ## API Preview
 
-![Swagger UI](docs/swagger-preview.png)
-
+![Swagger UI](docs/swagger-preview-dashboards.png)
+![Swagger UI](docs/swagger-preview-datasets-users.png)
 
 ## Стек технологий
 
@@ -91,7 +91,7 @@ platformwithdashboards/
 - [x] JWT аутентификация
 - [x] Загрузка и парсинг CSV/Excel файлов
 - [x] API документация (Swagger/ReDoc)
-- [ ] Настраиваемые дашборды с графиками
+- [x] Настраиваемые дашборды с графиками
 - [ ] Экспорт в PDF/Excel
 - [ ] Email-алерты при пороговых значениях
 - [ ] Docker-деплой с Nginx

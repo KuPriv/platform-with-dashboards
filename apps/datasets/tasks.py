@@ -30,3 +30,4 @@ def process_dataset(dataset_id: int) -> None:
         logger.error(f"process_dataset {dataset_id} failed: {e}")
         dataset.status = dataset.Status.FAILURE
         dataset.save(update_fields=["status"])
+        raise
