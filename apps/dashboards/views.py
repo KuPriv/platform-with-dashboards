@@ -4,8 +4,6 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from apps.core.permissions import IsOwner
-
 from .models import Dashboard, Widget
 from .serializers import (
     DashboardSerializer,
@@ -17,7 +15,7 @@ from .services import get_widget_chart_data
 
 class DashboardViewSet(viewsets.ModelViewSet):
     serializer_class = DashboardSerializer
-    permission_classes = [IsAuthenticated, IsOwner]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return Dashboard.objects.filter(user=self.request.user).select_related("user")
