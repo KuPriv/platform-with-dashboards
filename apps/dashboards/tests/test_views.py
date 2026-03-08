@@ -89,3 +89,20 @@ def test_data_action_return_right_structure_response(
     )
     assert response.data["labels"] == [TEST_CSV_NAME]
     assert response.data["values"] == [TEST_CSV_AGE]
+
+
+@pytest.mark.django_db
+def test_invalid_data_returns_validation_error(
+    api_client, user, dashboard, success_dataset
+):
+    api_client.force_authenticate(user)
+    response = api_client.post(
+        f"{DASHBOARDS_URL}{dashboard.id}/widgets/",
+        {
+            "dataset": success_dataset.id,
+            "chart_type": Widget.ChartType.PIE,
+            "x_column": "nonexist_column",
+            "y_column": "age",
+        },
+    )
+    assert response.status_code == 400
