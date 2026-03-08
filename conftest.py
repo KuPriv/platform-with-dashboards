@@ -62,3 +62,9 @@ def other_user(db):
         email="example2@example.com",
         password="testpass321",
     )
+
+
+@pytest.fixture(autouse=True)
+def clean_media(settings, tmp_path):
+    settings.MEDIA_ROOT = tmp_path
+    yield
