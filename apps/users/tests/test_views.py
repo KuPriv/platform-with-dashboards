@@ -48,6 +48,8 @@ def test_email_exists(api_client, user):
     }
 
     response = api_client.post("/api/v1/users/register/", data)
+    assert "email" in response.data
+    assert response.data["email"][0] == "Данный email уже зарегистрирован"
     assert response.status_code == 400
 
 
