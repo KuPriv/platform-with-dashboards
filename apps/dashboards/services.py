@@ -26,20 +26,22 @@ def validate_widget_data(dataset, x_column, y_column, chart_type, user) -> None:
 
 
 def get_widget_chart_data(widget: Widget) -> dict:
-    rows = DatasetRow.objects.filter(dataset=widget.dataset)
+    rows = DatasetRow.objects.filter(dataset=widget.dataset).values_list(
+        "data", flat=True
+    )
     if widget.chart_type in [
         Widget.ChartType.BAR,
         Widget.ChartType.LINE,
         Widget.ChartType.PIE,
     ]:
-        labels = [row.data[widget.x_column] for row in rows]
-        values = [row.data[widget.y_column] for row in rows]
+        labels = [row[widget.x_column] for row in rows]
+        values = [row[widget.y_column] for row in rows]
         return {"labels": labels, "values": values}
     if widget.chart_type == Widget.ChartType.TABLE:
         all_rows = list(rows)
         if not all_rows:
             return {"columns": [], "rows": []}
-        columns = list(all_rows[0].data.keys())
-        rows_data = [list(row.data.values()) for row in all_rows]
+        columns = list(all_rows[0].keys())
+        rows_data = [list(row.values()) for row in all_rows]
         return {"columns": columns, "rows": rows_data}
     raise ValueError(f"Неизвестный тип графика: {widget.chart_type}")
