@@ -12,7 +12,7 @@ def get_file_type(filename: str) -> str:
     ext = get_file_extension(filename)
     if ext == "csv":
         return "csv"
-    elif ext in EXCEL_EXTENSIONS:
+    if ext in EXCEL_EXTENSIONS:
         return "excel"
     raise ValueError(f"Тип файла не поддерживается: {ext}")
 
