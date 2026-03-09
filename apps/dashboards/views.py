@@ -18,7 +18,7 @@ class DashboardViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Dashboard.objects.filter(user=self.request.user).select_related("user")
+        return Dashboard.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
