@@ -4,7 +4,6 @@ from rest_framework.viewsets import GenericViewSet
 
 from .models import Dataset
 from .serializers import DatasetSerializer
-from .services import get_file_type
 from .tasks import process_dataset
 
 
@@ -22,6 +21,5 @@ class DatasetViewSet(
         return Dataset.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        file_type = get_file_type(serializer.validated_data["file"].name)
-        dataset = serializer.save(user=self.request.user, file_type=file_type)
+        dataset = serializer.save(user=self.request.user)
         process_dataset.delay(dataset.pk)
