@@ -189,3 +189,7 @@ LOGGING = {
 
 # EMAIL_SMTP
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "noreply@platform.com")
+
+MAX_DATASET_UPLOAD_SIZE = int(
+    os.getenv("MAX_DATASET_UPLOAD_SIZE", 8 * 1024 * 1024)
+)  # 8MB default
