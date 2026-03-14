@@ -43,11 +43,13 @@ def process_dataset(self, dataset_id: int) -> None:
         )
     except Exception as exc:
         logger.error("process_dataset %s failed: %s", dataset_id, exc)
-        dataset.status = dataset.Status.FAILURE
-        dataset.save(update_fields=["status"])
-        send_email.delay(
-            dataset.user.id,
-            "Ваш датасет не был обработан:(",
-            "Произошла ошибка при обработке датасета. Попробуйте загрузить файл снова.",
-        )
+        if self.request.retries == self.max_retries:
+            dataset.status = dataset.Status.FAILURE
+            dataset.save(update_fields=["status"])
+            send_email.delay(
+                dataset.user.id,
+                "Ваш датасет не был обработан:(",
+                "Произошла ошибка при обработке датасета. Попробуйте загрузить файл снова.",
+            )
+            return
         raise self.retry(exc=exc)
