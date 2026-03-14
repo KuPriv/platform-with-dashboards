@@ -1,3 +1,6 @@
+from functools import partial
+
+from django.db import transaction
 from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
@@ -22,4 +25,4 @@ class DatasetViewSet(
 
     def perform_create(self, serializer):
         dataset = serializer.save(user=self.request.user)
-        process_dataset.delay(dataset.pk)
+        transaction.on_commit(partial(process_dataset.delay, dataset.pk))

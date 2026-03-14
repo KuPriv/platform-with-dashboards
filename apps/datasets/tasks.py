@@ -1,4 +1,5 @@
 import logging
+from functools import partial
 
 from celery import shared_task
 from django.db import transaction
@@ -30,8 +31,11 @@ def process_dataset(self, dataset_id: int) -> None:
             DatasetRow.objects.bulk_create(rows, batch_size=1000)
             dataset.status = dataset.Status.SUCCESS
             dataset.save(update_fields=["status"])
+        # on commit ensures email is sent only after the transaction
+        # is committed, preventing notification on rollback.
         transaction.on_commit(
-            lambda: send_email.delay(
+            partial(
+                send_email.delay,
                 dataset.user.id,
                 "Ваш датасет был обработан!",
                 "Датасет был обработан!\n Скорее заходите проверить!",
