@@ -10,14 +10,13 @@ def validate_widget_data(dataset, x_column, y_column, chart_type, user) -> None:
         raise ValueError("Нет доступа к этому датасету")
     if dataset.status != Dataset.Status.SUCCESS:
         raise ValueError("Датасет еще не готов")
-    first_row = DatasetRow.objects.filter(dataset=dataset).first()
-    if first_row is None:
+    if not dataset.columns:
         raise ValueError("Датасет не содержит данных")
-    if x_column not in first_row.data:
+    if x_column not in dataset.columns:
         raise ValueError(f"Колонка {x_column} не найдена в датасете")
     if y_column and chart_type == Widget.ChartType.TABLE:
         raise ValueError("Поле y_column не поддерживается для типа table")
-    if y_column and y_column not in first_row.data:
+    if y_column and y_column not in dataset.columns:
         raise ValueError(f"Колонка {y_column} не найдена в датасете")
     if not y_column and chart_type in [
         Widget.ChartType.BAR,
