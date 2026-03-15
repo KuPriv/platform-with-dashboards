@@ -14,8 +14,15 @@ class DashboardSerializer(serializers.ModelSerializer):
 class WidgetReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Widget
-        fields = ["id", "chart_type", "x_column", "y_column", "created_at"]
-        read_only_fields = ["id", "chart_type", "x_column", "y_column", "created_at"]
+        fields = ["id", "dataset", "chart_type", "x_column", "y_column", "created_at"]
+        read_only_fields = [
+            "id",
+            "dataset",
+            "chart_type",
+            "x_column",
+            "y_column",
+            "created_at",
+        ]
 
 
 class WidgetWriteSerializer(serializers.ModelSerializer):

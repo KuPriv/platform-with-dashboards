@@ -1,3 +1,5 @@
+from django.db.models.expressions import RawSQL
+
 from apps.datasets.models import Dataset, DatasetRow
 
 from .models import Widget
@@ -8,14 +10,13 @@ def validate_widget_data(dataset, x_column, y_column, chart_type, user) -> None:
         raise ValueError("Нет доступа к этому датасету")
     if dataset.status != Dataset.Status.SUCCESS:
         raise ValueError("Датасет еще не готов")
-    first_row = DatasetRow.objects.filter(dataset=dataset).first()
-    if first_row is None:
+    if not dataset.columns:
         raise ValueError("Датасет не содержит данных")
-    if x_column not in first_row.data:
+    if x_column not in dataset.columns:
         raise ValueError(f"Колонка {x_column} не найдена в датасете")
     if y_column and chart_type == Widget.ChartType.TABLE:
         raise ValueError("Поле y_column не поддерживается для типа table")
-    if y_column and y_column not in first_row.data:
+    if y_column and y_column not in dataset.columns:
         raise ValueError(f"Колонка {y_column} не найдена в датасете")
     if not y_column and chart_type in [
         Widget.ChartType.BAR,
@@ -26,18 +27,26 @@ def validate_widget_data(dataset, x_column, y_column, chart_type, user) -> None:
 
 
 def get_widget_chart_data(widget: Widget) -> dict:
-    rows = DatasetRow.objects.filter(dataset=widget.dataset).values_list(
-        "data", flat=True
-    )
     if widget.chart_type in [
         Widget.ChartType.BAR,
         Widget.ChartType.LINE,
         Widget.ChartType.PIE,
     ]:
-        labels = [row[widget.x_column] for row in rows]
-        values = [row[widget.y_column] for row in rows]
+        rows = (
+            DatasetRow.objects.filter(dataset=widget.dataset)
+            .annotate(
+                x_value=RawSQL("data->>%s", [widget.x_column]),
+                y_value=RawSQL("data->>%s", [widget.y_column]),
+            )
+            .values_list("x_value", "y_value")
+        )
+        labels = [row[0] for row in rows]
+        values = [row[1] for row in rows]
         return {"labels": labels, "values": values}
     if widget.chart_type == Widget.ChartType.TABLE:
+        rows = DatasetRow.objects.filter(dataset=widget.dataset).values_list(
+            "data", flat=True
+        )
         all_rows = list(rows)
         if not all_rows:
             return {"columns": [], "rows": []}

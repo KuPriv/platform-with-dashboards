@@ -88,7 +88,7 @@ def test_data_action_return_right_structure_response(
         f"{DASHBOARDS_URL}{dashboard.id}/widgets/{widget.id}/data/"
     )
     assert response.data["labels"] == [TEST_CSV_NAME]
-    assert response.data["values"] == [TEST_CSV_AGE]
+    assert response.data["values"] == [str(TEST_CSV_AGE)]
 
 
 @pytest.mark.django_db

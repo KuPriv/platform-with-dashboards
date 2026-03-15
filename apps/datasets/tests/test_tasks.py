@@ -29,10 +29,12 @@ def test_proccess_datasets_creates_dataset_rows(dataset):
 
 @pytest.mark.django_db
 def test_proccess_datasets_sets_failure_status_on_error(dataset):
-    with pytest.raises(Exception):
-        with patch("apps.datasets.tasks.send_email.delay"):
-            with patch("apps.datasets.tasks.get_parsed_file") as mock_task:
-                mock_task.side_effect = Exception("parse error")
-                process_dataset(dataset.id)
+    with patch("apps.datasets.tasks.send_email.delay"):
+        with patch("apps.datasets.tasks.get_parsed_file") as mock_task:
+            mock_task.side_effect = Exception("parse error")
+            process_dataset.apply(
+                args=[dataset.id],
+                retries=process_dataset.max_retries,
+            )
     dataset.refresh_from_db()
     assert dataset.status == Dataset.Status.FAILURE

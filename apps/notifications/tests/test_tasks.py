@@ -21,5 +21,5 @@ def test_send_mail_is_successful(user):
             subject="subject_test",
             message="message_test",
             from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[user.email],
+            recipient_list=[user.email],
         )

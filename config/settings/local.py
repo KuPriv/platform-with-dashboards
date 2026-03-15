@@ -1,6 +1,11 @@
+import os
+
 from .base import *  # noqa: F401, F403
 from .base import SPECTACULAR_SETTINGS
 
+SECRET_KEY = os.getenv(
+    "SECRET_KEY", "django-insecure-local-dev-only-do-not-use-in-production"
+)
 DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
