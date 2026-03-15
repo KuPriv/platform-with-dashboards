@@ -17,7 +17,7 @@ def send_email(user_pk, subject, message):
             subject=subject,
             message=message,
             from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[user.email],
+            recipient_list=[user.email],
         )
         logger.info("Email sent to %s", user.email)
     except User.DoesNotExist:
