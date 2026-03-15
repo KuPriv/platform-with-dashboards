@@ -30,7 +30,8 @@ def process_dataset(self, dataset_id: int) -> None:
             ]
             DatasetRow.objects.bulk_create(rows, batch_size=1000)
             dataset.status = dataset.Status.SUCCESS
-            dataset.save(update_fields=["status"])
+            dataset.columns = list(df.columns)
+            dataset.save(update_fields=["status", "columns"])
         # on commit ensures email is sent only after the transaction
         # is committed, preventing notification on rollback.
         transaction.on_commit(
