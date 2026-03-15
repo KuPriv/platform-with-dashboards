@@ -130,7 +130,7 @@ def test_widget_chart_returns_labels_and_values(widget, chart_type, datasetrow):
     widget.save()
     chart_data = get_widget_chart_data(widget)
     assert chart_data["labels"] == [TEST_CSV_NAME]
-    assert chart_data["values"] == [TEST_CSV_AGE]
+    assert chart_data["values"] == [str(TEST_CSV_AGE)]
 
 
 @pytest.mark.django_db
