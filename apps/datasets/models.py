@@ -22,6 +22,7 @@ class Dataset(BaseModel):
     )
     file = models.FileField(upload_to="datasets/")
     status = models.CharField(max_length=20, choices=Status, default=Status.PENDING)
+    columns = models.JSONField(default=list, blank=True)
 
     def __str__(self):
         return self.name
@@ -29,7 +30,7 @@ class Dataset(BaseModel):
     class Meta:
         verbose_name = "Датасет"
         verbose_name_plural = "Датасеты"
-        ordering = ["-id"]
+        ordering = ["-created_at"]
 
 
 class DatasetRow(BaseModel):
