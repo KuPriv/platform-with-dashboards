@@ -20,6 +20,8 @@ def datasetrow(success_dataset):
         for (index, row) in df.iterrows()
     ]
     DatasetRow.objects.bulk_create(rows, batch_size=1000)
+    success_dataset.columns = list(df.columns)
+    success_dataset.save(update_fields=["columns"])
     return DatasetRow.objects.filter(dataset=success_dataset).first()
 
 
