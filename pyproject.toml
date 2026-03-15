@@ -1,6 +1,6 @@
 [project]
 name = "platformwithdashboards"
-version = "0.5.0"
+version = "0.6.0"
 description = ""
 authors = [
     {name = "Egor Sezen",email = "sezen.egor@mail.ru"}
